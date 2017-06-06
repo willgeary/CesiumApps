@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="description" content="A simple CZML example showing four satellites in orbit around the Earth, and some ground objects.">
     <meta name="cesium-sandcastle-labels" content="Showcases, DataSources">
-    <title>My Commute</title>
+    <title>Michigan</title>
     <script type="text/javascript" src="../Sandcastle/Sandcastle-header.js"></script>
     <script type="text/javascript" src="../../ThirdParty/requirejs-2.1.20/require.js"></script>
     <script type="text/javascript">
@@ -58,9 +58,10 @@ Sandcastle.addDefaultToolbarButton('Restart', function() {
     viewer.dataSources.add(Cesium.CzmlDataSource.load('../Data/michigan.czml'));
     
     viewer.scene.camera.setView({
-        destination:  Cesium.Cartesian3.fromDegrees(-73.9, 40.7, 55000),
+        destination:  Cesium.Cartesian3.fromDegrees(-83.7430, 42.2808, 130000),
         orientation: {
-            heading: 9.5
+            heading: Cesium.Math.toRadians(0),
+            pitch : Cesium.Math.toRadians(-90)
         }
     });
 });
