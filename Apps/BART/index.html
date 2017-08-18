@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="description" content="A simple CZML example showing four satellites in orbit around the Earth, and some ground objects.">
+    <meta name="cesium-sandcastle-labels" content="Showcases, DataSources">
+    <title>BART</title>
+    <script type="text/javascript" src="../Sandcastle/Sandcastle-header.js"></script>
+    <script type="text/javascript" src="../../ThirdParty/requirejs-2.1.20/require.js"></script>
+    <script type="text/javascript">
+    require.config({
+        baseUrl : '../../Source',
+        waitSeconds : 60
+    });
+    </script>
+</head>
+<body class="sandcastle-loading" data-sandcastle-bucket="bucket-requirejs.html">
+<style>
+    @import url(../Sandcastle/templates/bucket.css);
+</style>
+<div id="cesiumContainer" class="fullSize"></div>
+<div id="loadingOverlay"><h1>Loading...</h1></div>
+<div id="toolbar"></div>
+
+<script id="cesium_sandcastle_script">
+function startup(Cesium) {
+    'use strict';
+
+Cesium.BingMapsApi.defaultKey = 'At2y8wTp7i2xyPBsYXYUHrLOk-ZOmQMiT7-JTU140HRP_9exxYuA4DIZIhK_NxzU';
+
+
+
+var viewer = new Cesium.Viewer('cesiumContainer');
+
+// set lighting to false
+viewer.scene.globe.enableLighting = false;
+
+var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
+    url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
+    requestWaterMask : true,
+    requestVertexNormals : true
+});
+viewer.terrainProvider = cesiumTerrainProviderMeshes;
+
+// setup alternative terrain providers
+var ellipsoidProvider = new Cesium.EllipsoidTerrainProvider();
+
+var vrTheWorldProvider = new Cesium.VRTheWorldTerrainProvider({
+    url : 'http://www.vr-theworld.com/vr-theworld/tiles1.0.0/73/',
+    credit : 'Terrain data courtesy VT MÄK'
+});
+
+
+
+
+/*
+
+
+var viewer = new Cesium.Viewer('cesiumContainer');
+
+
+var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
+            requestWaterMask : true /*request vertex normals?
+        });
+});
+viewer.terrainProvider = terrainProvider;
+viewer.scene.globe.enableLighting = false;
+
+
+/*var viewer = new Cesium.Viewer('cesiumContainer', {
+    imageryProvider : new Cesium.BingMapsImageryProvider({
+        url : 'https://dev.virtualearth.net',
+        mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+    }),
+    baseLayerPicker : false
+});
+
+
+var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
+    url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
+    requestWaterMask : true,
+    requestVertexNormals : true
+});
+viewer.terrainProvider = cesiumTerrainProviderMeshes;*/
+
+
+/*
+Sandcastle.addToolbarButton('Satellites', function() {
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('../Data/simple.czml'));
+
+    viewer.camera.flyHome(0);
+});*/
+
+
+
+Sandcastle.addDefaultToolbarButton('Restart', function() {
+    viewer.dataSources.add(Cesium.CzmlDataSource.load('../Data/bart1.czml'));
+
+    viewer.scene.camera.setView({
+        destination:  Cesium.Cartesian3.fromDegrees(-123.343099, 35.036853, 200000),
+        orientation: {
+            heading: Cesium.Math.toRadians(30),
+            pitch : Cesium.Math.toRadians(-40)
+        }
+    });
+});
+
+Sandcastle.reset = function() {
+    viewer.dataSources.removeAll();
+};
+//Sandcastle_End
+    Sandcastle.finishedLoading();
+}
+if (typeof Cesium !== "undefined") {
+    startup(Cesium);
+} else if (typeof require === "function") {
+    require(["Cesium"], startup);
+}
+</script>
+</body>
+</html>
